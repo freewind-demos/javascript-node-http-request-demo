@@ -1,3 +1,22 @@
-const _ = require('lodash')
+const http = require('http')
 
-console.log('Hello, ' + _.capitalize('javascript'))
+const options = {
+    host: 'stackoverflow.com',
+    path: '/'
+}
+
+const request = http.request(options, function (res) {
+    let data = ''
+    res.on('data', function (chunk) {
+        data += chunk
+    })
+    res.on('end', function () {
+        console.log(data)
+    })
+})
+
+request.on('error', function (e) {
+    console.log(e.message)
+})
+
+request.end()
